@@ -34,6 +34,11 @@ def _siguiente_id(clientes: List[Cliente]) -> int:
 
 def crear_cliente(nombre: str, email: str, telefono: str, direccion: str) -> Cliente:
     clientes = cargar_clientes()
+
+    # Validaciones (si fallan, lanzan ValidacionError y se corta aquí)
+    Cliente.validar_email(email)
+    Cliente.validar_telefono(telefono)
+
     nuevo = Cliente(
         id=_siguiente_id(clientes),
         nombre=nombre.strip(),
@@ -41,6 +46,7 @@ def crear_cliente(nombre: str, email: str, telefono: str, direccion: str) -> Cli
         telefono=telefono.strip(),
         direccion=direccion.strip(),
     )
+
     clientes.append(nuevo)
     guardar_clientes(clientes)
     return nuevo

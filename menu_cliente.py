@@ -1,4 +1,5 @@
 from servicios.clientes_servicios import crear_cliente, listar_clientes
+from modelos.clientes import ValidacionError
 
 
 def menu_principal() -> None:
@@ -28,9 +29,18 @@ def _menu_crear_cliente() -> None:
     telefono = input("Teléfono: ").strip()
     direccion = input("Dirección: ").strip()
 
-    cliente = crear_cliente(nombre, email, telefono, direccion)
-    print("\n✅ Cliente creado:")
-    print(cliente)
+    try:
+        cliente = crear_cliente(nombre, email, telefono, direccion)
+        print("\n✅ Cliente creado:")
+        print(cliente)
+
+    except ValidacionError as e:
+        # Error esperado por datos malos
+        print(f"\n❌ Validación: {e}")
+
+    except Exception as e:
+        # Error inesperado (bugs, JSON corrupto, etc.)
+        print(f"\n❌ Error inesperado: {e}")
 
 
 def _menu_listar_clientes() -> None:
