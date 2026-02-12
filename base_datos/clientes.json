@@ -3,16 +3,35 @@
     "id": 1,
     "tipo": "regular",
     "nombre": "raul",
-    "email": "asd",
-    "telefono": "12312312",
-    "direccion": "asdsdaj"
+    "email": "asdan@aksdd.com",
+    "telefono": "12345678901",
+    "direccion": "asdlkas"
   },
   {
     "id": 2,
     "tipo": "regular",
-    "nombre": "sakjd",
-    "email": "aksj@kajhd.com",
-    "telefono": "1234567890",
-    "direccion": "askjd"
+    "nombre": "raul asdnto asdjaks",
+    "email": "antoni@kjsd.com",
+    "telefono": "123456787654",
+    "direccion": "akljdhaksh"
+  },
+  {
+    "id": 3,
+    "tipo": "premium",
+    "nombre": "radsa",
+    "email": "asjk@kja.com",
+    "telefono": "9873190287321",
+    "direccion": "akjdsjh",
+    "descuento": 0.9
+  },
+  {
+    "id": 4,
+    "tipo": "corporativo",
+    "nombre": "aiouda",
+    "email": "asdiu@kjdsh.com",
+    "telefono": "9837987213",
+    "direccion": "ahdajdanwwwq",
+    "razon_social": "iiusnd",
+    "rut_empresa": "12398172"
   }
 ]
