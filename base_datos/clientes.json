@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "tipo": "regular",
+    "nombre": "raul",
+    "email": "antoninojeje",
+    "telefono": "1827367",
+    "direccion": "avcuatroeje"
+  },
+  {
+    "id": 2,
+    "tipo": "regular",
+    "nombre": "hola",
+    "email": "como",
+    "telefono": "oiasd",
+    "direccion": "asdsad"
+  }
+]
