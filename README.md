@@ -90,6 +90,8 @@ El método `beneficio()` está implementado de forma polimórfica, permitiendo c
 
 ## 🗂️ Estructura del proyecto
 
+```text
+
 GestorInteligenteDeClientes/
 │ main.py
 │ menu_cliente.py
@@ -112,7 +114,7 @@ GestorInteligenteDeClientes/
 ├─ diagrama_clases.puml
 └─ uml_clientes.png
 
----
+```
 
 ---
 
@@ -121,7 +123,11 @@ GestorInteligenteDeClientes/
 1. Abrir una terminal en la carpeta raíz del proyecto  
 2. Ejecutar:
 
+```bash
+
 python main.py
+
+```
 ---
 ## 🧪 Ejemplo de uso
 
