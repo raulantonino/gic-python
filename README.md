@@ -112,7 +112,8 @@ GestorInteligenteDeClientes/
 │
 └─ docs/
 ├─ diagrama_clases.puml
-└─ uml_clientes.png
+├─ uml_clientes.png
+└─ pregunta.md
 
 ```
 
