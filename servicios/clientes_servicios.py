@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 from typing import List, Dict, Any, Optional
+from datetime import datetime
 
 from modelos.clientes import (
     Cliente,
@@ -10,8 +11,16 @@ from modelos.clientes import (
     ValidacionError,
 )
 
-
 DB_PATH = Path("base_datos") / "clientes.json"
+LOG_PATH = Path("logs") / "actividad.log"
+
+
+def _log(accion: str, detalle: str) -> None:
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    linea = f"{timestamp} | {accion.upper()} | {detalle}\n"
+    with open(LOG_PATH, "a", encoding="utf-8") as f:
+        f.write(linea)
 
 
 def cargar_clientes() -> List[Cliente]:
@@ -36,6 +45,21 @@ def _siguiente_id(clientes: List[Cliente]) -> int:
     if not clientes:
         return 1
     return max(c.id for c in clientes) + 1
+
+
+def _buscar_indice_por_id(clientes: List[Cliente], cliente_id: int) -> int:
+    for i, c in enumerate(clientes):
+        if c.id == cliente_id:
+            return i
+    return -1
+
+
+def obtener_cliente_por_id(cliente_id: int) -> Cliente:
+    clientes = cargar_clientes()
+    idx = _buscar_indice_por_id(clientes, cliente_id)
+    if idx == -1:
+        raise ValidacionError(f"No existe cliente con id={cliente_id}.")
+    return clientes[idx]
 
 
 def crear_cliente(
@@ -89,7 +113,6 @@ def crear_cliente(
         )
 
     else:
-        # default: regular
         nuevo = ClienteRegular(
             id=nuevo_id,
             nombre=nombre.strip(),
@@ -100,8 +123,74 @@ def crear_cliente(
 
     clientes.append(nuevo)
     guardar_clientes(clientes)
+
+    _log("CREAR", f"id={nuevo.id} tipo={nuevo.tipo()} nombre={nuevo.nombre}")
     return nuevo
 
 
 def listar_clientes() -> List[Cliente]:
     return cargar_clientes()
+
+
+def editar_cliente(
+    cliente_id: int,
+    nombre: Optional[str] = None,
+    email: Optional[str] = None,
+    telefono: Optional[str] = None,
+    direccion: Optional[str] = None,
+    descuento: Optional[float] = None,
+    razon_social: Optional[str] = None,
+    rut_empresa: Optional[str] = None,
+) -> Cliente:
+    clientes = cargar_clientes()
+    idx = _buscar_indice_por_id(clientes, cliente_id)
+    if idx == -1:
+        raise ValidacionError(f"No existe cliente con id={cliente_id}.")
+
+    actual = clientes[idx]
+
+    # ---- Validaciones y asignaciones (solo si vienen) ----
+    if nombre is not None:
+        Cliente.validar_texto_no_vacio(nombre, "Nombre")
+        actual.nombre = nombre.strip()
+
+    if direccion is not None:
+        Cliente.validar_texto_no_vacio(direccion, "Dirección")
+        actual.direccion = direccion.strip()
+
+    if email is not None:
+        Cliente.validar_email(email)
+        actual.email = email.strip()
+
+    if telefono is not None:
+        Cliente.validar_telefono(telefono)
+        actual.telefono = telefono.strip()
+
+    # Campos extra según tipo
+    if isinstance(actual, ClientePremium) and descuento is not None:
+        Cliente.validar_descuento(float(descuento))
+        actual.descuento = float(descuento)
+
+    if isinstance(actual, ClienteCorporativo):
+        if razon_social is not None:
+            Cliente.validar_texto_no_vacio(razon_social, "Razón social")
+            actual.razon_social = razon_social.strip()
+        if rut_empresa is not None:
+            Cliente.validar_texto_no_vacio(rut_empresa, "RUT empresa")
+            actual.rut_empresa = rut_empresa.strip()
+
+    guardar_clientes(clientes)
+    _log("EDITAR", f"id={actual.id} tipo={actual.tipo()} nombre={actual.nombre}")
+    return actual
+
+
+def eliminar_cliente(cliente_id: int) -> Cliente:
+    clientes = cargar_clientes()
+    idx = _buscar_indice_por_id(clientes, cliente_id)
+    if idx == -1:
+        raise ValidacionError(f"No existe cliente con id={cliente_id}.")
+
+    eliminado = clientes.pop(idx)
+    guardar_clientes(clientes)
+    _log("ELIMINAR", f"id={eliminado.id} tipo={eliminado.tipo()} nombre={eliminado.nombre}")
+    return eliminado

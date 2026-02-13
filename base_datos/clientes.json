@@ -1,13 +1,5 @@
 [
   {
-    "id": 1,
-    "tipo": "regular",
-    "nombre": "raul",
-    "email": "asdan@aksdd.com",
-    "telefono": "12345678901",
-    "direccion": "asdlkas"
-  },
-  {
     "id": 2,
     "tipo": "regular",
     "nombre": "raul asdnto asdjaks",
@@ -27,11 +19,29 @@
   {
     "id": 4,
     "tipo": "corporativo",
-    "nombre": "aiouda",
-    "email": "asdiu@kjdsh.com",
-    "telefono": "9837987213",
-    "direccion": "ahdajdanwwwq",
-    "razon_social": "iiusnd",
-    "rut_empresa": "12398172"
+    "nombre": "juana",
+    "email": "jkajsd@jkj.com",
+    "telefono": "92183712",
+    "direccion": "jjjejej",
+    "razon_social": "83838h",
+    "rut_empresa": "298324"
+  },
+  {
+    "id": 5,
+    "tipo": "corporativo",
+    "nombre": "hola",
+    "email": "sakjh@jashd.com",
+    "telefono": "2187369128763",
+    "direccion": "kjsadhas",
+    "razon_social": "ojnoa",
+    "rut_empresa": "iuhda129"
+  },
+  {
+    "id": 6,
+    "tipo": "regular",
+    "nombre": "1231sqw",
+    "email": "asd@jashgd.com",
+    "telefono": "0219837012987",
+    "direccion": "akdhjas"
   }
 ]
