@@ -1,9 +1,9 @@
 # Gestor Inteligente de Clientes (GIC) — Sistema de Gestión (Python)
 
-Proyecto de consola en Python para la gestión de clientes de una empresa ficticia.
+Proyecto de consola en Python para la gestión de clientes de una empresa ficticia.  
 Permite administrar distintos tipos de clientes (Regular, Premium y Corporativo), aplicar validaciones, persistir datos en JSON y registrar actividad en logs.
 
-> El sistema persiste los datos en base_datos/clientes.json.
+> El sistema persiste los datos en `base_datos/clientes.json`.  
 > Incluye opción de reinicio manual mediante confirmación explícita.
 
 ---
@@ -25,38 +25,40 @@ Desarrollar un sistema por consola que permita:
 
 ### Menú principal
 
-1. Crear cliente  
-2. Listar clientes  
-3. Ver cliente por ID  
-4. Editar cliente  
-5. Eliminar cliente  
-9. Resetear datos  
-0. Salir  
-
----
+- Crear cliente  
+- Listar clientes  
+- Ver cliente por ID  
+- Editar cliente  
+- Eliminar cliente  
+- Resetear datos  
+- Salir  
 
 ### Detalles importantes
 
-- **Crear cliente**
-  - Permite elegir tipo: Regular, Premium o Corporativo
-  - Valida email, teléfono y campos obligatorios
-  - Premium incluye descuento
-  - Corporativo incluye razón social y RUT empresa
-  - Registra operación en logs
+#### Crear cliente
 
-- **Editar cliente**
-  - Permite modificar campos seleccionados
-  - Mantiene validaciones
-  - Registra operación en logs
+- Permite elegir tipo: Regular, Premium o Corporativo
+- Valida email, teléfono y campos obligatorios
+- Premium incluye descuento
+- Corporativo incluye razón social y RUT empresa
+- Registra operación en logs
 
-- **Eliminar cliente**
-  - Solicita confirmación
-  - Registra operación en logs
+#### Editar cliente
 
-- **Resetear datos**
-  - Requiere escribir exactamente "RESET"
-  - Reinicia el archivo JSON a una lista vacía
-  - Registra operación en logs
+- Permite modificar campos seleccionados
+- Mantiene validaciones
+- Registra operación en logs
+
+#### Eliminar cliente
+
+- Solicita confirmación
+- Registra operación en logs
+
+#### Resetear datos
+
+- Requiere escribir exactamente "RESET"
+- Reinicia el archivo JSON a una lista vacía
+- Registra operación en logs
 
 ---
 
@@ -75,12 +77,12 @@ Desarrollar un sistema por consola que permita:
 ## 🧩 Modelado POO
 
 Clase base:
-- Cliente
+- `Cliente`
 
 Subclases:
-- ClienteRegular
-- ClientePremium
-- ClienteCorporativo
+- `ClienteRegular`
+- `ClientePremium`
+- `ClienteCorporativo`
 
 El método `beneficio()` está implementado de forma polimórfica, permitiendo comportamiento distinto según el tipo de cliente.
 
@@ -95,39 +97,39 @@ GestorInteligenteDeClientes/
 │ .gitignore
 │
 ├─ base_datos/
-│   └─ clientes.json
+│ └─ clientes.json
 │
 ├─ logs/
-│   └─ actividad.log
+│ └─ actividad.log
 │
 ├─ modelos/
-│   └─ clientes.py
+│ └─ clientes.py
 │
 ├─ servicios/
-│   └─ clientes_servicios.py
+│ └─ clientes_servicios.py
 │
 └─ docs/
-    ├─ diagrama_clases.puml
-    └─ uml_clientes.png
+├─ diagrama_clases.puml
+└─ uml_clientes.png
+
+---
 
 ---
 
 ## ▶️ Cómo ejecutar el programa
 
-1. Abrir una terminal en la carpeta raíz del proyecto
+1. Abrir una terminal en la carpeta raíz del proyecto  
 2. Ejecutar:
 
 python main.py
-
 ---
-
 ## 🧪 Ejemplo de uso
 
 - Crear un cliente Premium con descuento 0.10
 - Editar su email
 - Listar clientes
 - Eliminar cliente
-- Revisar logs en logs/actividad.log
+- Revisar logs en `logs/actividad.log`
 
 ---
 
@@ -144,19 +146,20 @@ python main.py
 ## 📝 Persistencia
 
 Los datos se almacenan en:
-base_datos/clientes.json
 
-Cada cliente incluye el campo "tipo" para permitir reconstrucción correcta de la subclase correspondiente.
+`base_datos/clientes.json`
+
+Cada cliente incluye el campo `"tipo"` para permitir reconstrucción correcta de la subclase correspondiente.
 
 ---
 
 ## 📘 UML
 
-El diagrama de clases fue diseñado con PlantUML.
-Se encuentra en la carpeta docs como:
+El diagrama de clases fue diseñado con PlantUML.  
+Se encuentra en la carpeta `docs` como:
 
-- diagrama_clases.puml
-- uml_clientes.png
+- `diagrama_clases.puml`
+- `uml_clientes.png`
 
 ---
 

@@ -1,4 +1,0 @@
-2026-02-12 23:36:57 | EDITAR | id=4 tipo=corporativo nombre=juana
-2026-02-12 23:38:36 | ELIMINAR | id=1 tipo=regular nombre=raul
-2026-02-12 23:39:05 | CREAR | id=6 tipo=regular nombre=1231sqw
-2026-02-13 00:04:20 | RESET | base_datos/clientes.json reiniciado a lista vacía
