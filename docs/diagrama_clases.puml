@@ -1,0 +1,79 @@
+@startuml
+title Gestor Inteligente de Clientes (GIC) - Diagrama de Clases Final
+
+skinparam classAttributeIconSize 0
+
+' =========================
+' EXCEPCIÓN
+' =========================
+class ValidacionError <<exception>> {
+}
+
+' =========================
+' MODELOS
+' =========================
+abstract class Cliente {
+  - id: int
+  - nombre: str
+  - email: str
+  - telefono: str
+  - direccion: str
+  --
+  + beneficio(): float
+  + tipo(): str
+  + to_dict(): dict
+  + __str__(): str
+  --
+  {static} + from_dict(data: dict): Cliente
+  {static} + validar_email(email: str): void
+  {static} + validar_telefono(telefono: str): void
+  {static} + validar_descuento(descuento: float): void
+  {static} + validar_texto_no_vacio(valor: str, campo: str): void
+}
+
+class ClienteRegular {
+  + beneficio(): float
+  + tipo(): str
+}
+
+class ClientePremium {
+  - descuento: float
+  --
+  + beneficio(): float
+  + tipo(): str
+  + to_dict(): dict
+}
+
+class ClienteCorporativo {
+  - razon_social: str
+  - rut_empresa: str
+  --
+  + beneficio(): float
+  + tipo(): str
+  + to_dict(): dict
+}
+
+Cliente <|-- ClienteRegular
+Cliente <|-- ClientePremium
+Cliente <|-- ClienteCorporativo
+
+ValidacionError <.. Cliente : lanza
+
+' =========================
+' SERVICIOS
+' =========================
+class ClienteService {
+  + cargar_clientes(): List<Cliente>
+  + guardar_clientes(clientes: List<Cliente>): void
+  + crear_cliente(...): Cliente
+  + listar_clientes(): List<Cliente>
+  + obtener_cliente_por_id(id: int): Cliente
+  + editar_cliente(...): Cliente
+  + eliminar_cliente(id: int): Cliente
+  + resetear_datos(confirmacion: str): void
+}
+
+ClienteService ..> Cliente : usa
+ClienteService ..> ValidacionError : usa
+
+@enduml
