@@ -4,9 +4,9 @@ from servicios.clientes_servicios import (
     obtener_cliente_por_id,
     editar_cliente,
     eliminar_cliente,
+    resetear_datos,
 )
-from modelos.clientes import ValidacionError
-from modelos.clientes import ClientePremium, ClienteCorporativo
+from modelos.clientes import ValidacionError, ClientePremium, ClienteCorporativo
 
 
 def menu_principal() -> None:
@@ -17,6 +17,7 @@ def menu_principal() -> None:
         print("3) Ver cliente por ID")
         print("4) Editar cliente")
         print("5) Eliminar cliente")
+        print("9) Resetear datos (PELIGRO)")
         print("0) Salir")
 
         opcion = input("Elige una opción: ").strip()
@@ -31,6 +32,8 @@ def menu_principal() -> None:
             _menu_editar_cliente()
         elif opcion == "5":
             _menu_eliminar_cliente()
+        elif opcion == "9":
+            _menu_resetear_datos()
         elif opcion == "0":
             print("Saliendo...")
             break
@@ -139,7 +142,6 @@ def _menu_editar_cliente() -> None:
         telefono = input("Nuevo teléfono (solo números): ").strip()
         direccion = input("Nueva dirección: ").strip()
 
-        # Convertimos blanks a None (para no tocar)
         nombre = None if nombre == "" else nombre
         email = None if email == "" else email
         telefono = None if telefono == "" else telefono
@@ -211,5 +213,20 @@ def _menu_eliminar_cliente() -> None:
     except ValidacionError as e:
         print(f"\n❌ {e}")
 
+    except Exception as e:
+        print(f"\n❌ Error inesperado: {e}")
+
+
+def _menu_resetear_datos() -> None:
+    print("\n--- Resetear datos (PELIGRO) ---")
+    print("Esto borrará TODOS los clientes (clientes.json quedará vacío).")
+    print("Para confirmar, escribe exactamente: RESET")
+    confirmacion = input("Confirmación: ").strip()
+
+    try:
+        resetear_datos(confirmacion)
+        print("\n✅ Datos reiniciados. clientes.json quedó vacío.")
+    except ValidacionError as e:
+        print(f"\n❌ {e}")
     except Exception as e:
         print(f"\n❌ Error inesperado: {e}")

@@ -16,6 +16,7 @@ LOG_PATH = Path("logs") / "actividad.log"
 
 
 def _log(accion: str, detalle: str) -> None:
+    """Registra actividades del sistema en logs/actividad.log."""
     LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     linea = f"{timestamp} | {accion.upper()} | {detalle}\n"
@@ -23,10 +24,15 @@ def _log(accion: str, detalle: str) -> None:
         f.write(linea)
 
 
-def cargar_clientes() -> List[Cliente]:
+def _asegurar_db() -> None:
+    """Asegura que exista el archivo JSON de clientes."""
     if not DB_PATH.exists():
         DB_PATH.parent.mkdir(parents=True, exist_ok=True)
         DB_PATH.write_text("[]", encoding="utf-8")
+
+
+def cargar_clientes() -> List[Cliente]:
+    _asegurar_db()
 
     contenido = DB_PATH.read_text(encoding="utf-8").strip()
     if not contenido:
@@ -37,6 +43,7 @@ def cargar_clientes() -> List[Cliente]:
 
 
 def guardar_clientes(clientes: List[Cliente]) -> None:
+    _asegurar_db()
     data = [c.to_dict() for c in clientes]
     DB_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -149,7 +156,7 @@ def editar_cliente(
 
     actual = clientes[idx]
 
-    # ---- Validaciones y asignaciones (solo si vienen) ----
+    # Asignaciones condicionales (solo si vienen)
     if nombre is not None:
         Cliente.validar_texto_no_vacio(nombre, "Nombre")
         actual.nombre = nombre.strip()
@@ -194,3 +201,16 @@ def eliminar_cliente(cliente_id: int) -> Cliente:
     guardar_clientes(clientes)
     _log("ELIMINAR", f"id={eliminado.id} tipo={eliminado.tipo()} nombre={eliminado.nombre}")
     return eliminado
+
+
+def resetear_datos(confirmacion: str) -> None:
+    """
+    Reinicia la base de datos de clientes (clientes.json -> []).
+    Se pide confirmación explícita para evitar borrados accidentales.
+    """
+    if confirmacion.strip().upper() != "RESET":
+        raise ValidacionError("Confirmación inválida. Escribe RESET para confirmar.")
+
+    _asegurar_db()
+    DB_PATH.write_text("[]", encoding="utf-8")
+    _log("RESET", "base_datos/clientes.json reiniciado a lista vacía")
